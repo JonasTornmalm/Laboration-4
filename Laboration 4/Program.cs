@@ -51,7 +51,6 @@ namespace Laboration_4
                 }
                 Console.WriteLine();
             }
-
             Console.ReadLine();
 
         }
