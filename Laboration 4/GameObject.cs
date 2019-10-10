@@ -15,6 +15,6 @@ namespace Laboration_4
             this.x = x;
             this.y = y;
         }
-
+        public virtual void PlayerMoves() { }
     }
 }
