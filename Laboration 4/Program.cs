@@ -9,8 +9,11 @@ namespace Laboration_4
         {
             int levelHeight = 11;
             int levelWidth = 30;
+            int playerStartRow = 5;
+            int playerStartColumn = 14;
 
             GameSession gameSession = new GameSession(levelHeight, levelWidth);
+            gameSession.Add(new Player(playerStartRow, playerStartColumn));
 
             char[,] charLayout =
             new char[,]
@@ -43,16 +46,10 @@ namespace Laboration_4
                 }
             }
 
-            for(int row = 0; row < levelHeight; row++)
+            while (true)
             {
-                for(int column = 0; column < levelWidth; column++)
-                {
-                    Console.Write(gameSession.GetGameObject(row, column).symbol);
-                }
-                Console.WriteLine();
+                gameSession.PlayGame();
             }
-            Console.ReadLine();
-
         }
     }
 }
