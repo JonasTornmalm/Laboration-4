@@ -4,12 +4,14 @@ using System.Text;
 
 namespace Laboration_4
 {
-    class GameSession
+    public class GameSession
     {
         List<GameObject> gameObjects = new List<GameObject>();
 
         private int height;
         private int width;
+        private bool hasPickedUpKey = false;
+        private bool doorUnlocked = false;
 
         public GameSession(int height, int width)
         {
@@ -49,9 +51,55 @@ namespace Laboration_4
             }
             return null;
         }
+        public bool CheckIfWalkable(int x, int y)
+        {
 
+            foreach (var gameObject in gameObjects)
+            {
+                if (gameObject is Wall && gameObject.x == x && gameObject.y == y)
+                {
+                    return false;
+                }
+            }
+            foreach(var gameObject in gameObjects)
+            {
+                if(gameObject is Key && gameObject.x == x && gameObject.y == y)
+                {
+                    Console.CursorTop = 20;
+                    Console.WriteLine("*You found a key!*\n" +
+                        "*Adding to inventory*");
+                    gameObject.AddToInventory(gameObject);
+                    hasPickedUpKey = true;
+                }
+            }
+            foreach(var gameObject in gameObjects)
+            {
+                if(gameObject is Door && gameObject.x == x && gameObject.y == y)
+                {
+                    if(!hasPickedUpKey)
+                    {
+                        Console.CursorTop = 20;
+                        Console.WriteLine("*Door is locked*");
+                        return false;
+                    }
+                    else
+                    {
+                        if (!doorUnlocked)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("*Enter*");
+                            Console.ReadLine();
+                        }
+                        doorUnlocked = true;
+                        gameObject.AddToInventory(gameObject);
+                    }
+                }
+            }
+            return true;
+        }
         public void RenderGameObjects()
         {
+            Console.CursorVisible = false;
             Console.CursorTop = 0;
             Console.CursorLeft = 0;
             for (int row = 0; row < height; row++)
@@ -63,23 +111,9 @@ namespace Laboration_4
                 Console.WriteLine();
             }
         }
-        public bool CheckIfWalkable(int x, int y)
-        {
-            
-            foreach(var gameObject in gameObjects)
-            {
-                if(gameObject is Wall)
-                {
-                    if(gameObject.x == x && gameObject.y == y)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
         public int MovePlayer()
         {
+            Console.CursorTop = 24;
             foreach (var gameObject in gameObjects)
             {
                 if (gameObject is Player)
