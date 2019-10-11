@@ -52,6 +52,8 @@ namespace Laboration_4
 
         public void RenderGameObjects()
         {
+            Console.CursorTop = 0;
+            Console.CursorLeft = 0;
             for (int row = 0; row < height; row++)
             {
                 for (int column = 0; column < width; column++)
@@ -61,12 +63,25 @@ namespace Laboration_4
                 Console.WriteLine();
             }
         }
+        public bool CheckIfWalkable(int x, int y)
+        {
+            
+            foreach(var gameObject in gameObjects)
+            {
+                if(gameObject is Wall)
+                {
+                    if(gameObject.x == x && gameObject.y == y)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
         public int MovePlayer()
         {
             foreach (var gameObject in gameObjects)
             {
-                Console.CursorTop = 0;
-                Console.CursorLeft = 0;
                 if (gameObject is Player)
                 {
                     var currentPlayerPositionX = gameObject.x;
@@ -74,23 +89,35 @@ namespace Laboration_4
                     var key = Console.ReadKey();
                     if (key.Key == ConsoleKey.W)
                     {
-                        currentPlayerPositionX = gameObject.x--;
-                        gameObject.PlayerMoves();
+                        if(CheckIfWalkable(currentPlayerPositionX - 1, currentPlayerPositionY))
+                        {
+                            currentPlayerPositionX = gameObject.x--;
+                            gameObject.PlayerUserInterface();
+                        }
                     }
                     else if (key.Key == ConsoleKey.A)
                     {
-                        currentPlayerPositionY = gameObject.y--;
-                        gameObject.PlayerMoves();
+                        if (CheckIfWalkable(currentPlayerPositionX, currentPlayerPositionY - 1))
+                        {
+                            currentPlayerPositionY = gameObject.y--;
+                            gameObject.PlayerUserInterface();
+                        }
                     }
                     else if (key.Key == ConsoleKey.S)
                     {
-                        currentPlayerPositionX = gameObject.x++;
-                        gameObject.PlayerMoves();
+                        if (CheckIfWalkable(currentPlayerPositionX + 1, currentPlayerPositionY))
+                        {
+                            currentPlayerPositionX = gameObject.x++;
+                            gameObject.PlayerUserInterface();
+                        }
                     }
                     else if (key.Key == ConsoleKey.D)
                     {
-                        currentPlayerPositionY = gameObject.y++;
-                        gameObject.PlayerMoves();
+                        if (CheckIfWalkable(currentPlayerPositionX, currentPlayerPositionY + 1))
+                        {
+                            currentPlayerPositionY = gameObject.y++;
+                            gameObject.PlayerUserInterface();
+                        }
                     }
                 }
             }
