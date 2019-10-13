@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Laboration_4
 {
@@ -10,6 +11,9 @@ namespace Laboration_4
 
         private int height;
         private int width;
+        private int movesMade { get; set; } = 0;
+        //private int currentHealth { get; set; } = 100;
+
         private bool hasPickedUpKey = false;
         private bool doorUnlocked = false;
 
@@ -18,28 +22,15 @@ namespace Laboration_4
             this.height = height;
             this.width = width;
         }
+        public void PlayerUserInterface()
+        {
+            movesMade++;
+            Console.CursorTop = 25;
+            Console.CursorLeft = 0;
 
-        public void Add(Wall wall)
-        {
-            gameObjects.Add(wall);
+            Console.WriteLine($"HP: \n" +
+            $"Player has moved {movesMade} times.");
         }
-        public void Add(Floor floor)
-        {
-            gameObjects.Add(floor);
-        }
-        public void Add(Door door)
-        {
-            gameObjects.Add(door);
-        }
-        public void Add(Key key)
-        {
-            gameObjects.Add(key);
-        }
-        public void Add(Player player)
-        {
-            gameObjects.Add(player);
-        }
-
         public GameObject GetGameObject(int x, int y)
         {
             foreach (GameObject gameObject in gameObjects)
@@ -65,10 +56,13 @@ namespace Laboration_4
             {
                 if(gameObject is Key && gameObject.x == x && gameObject.y == y)
                 {
-                    Console.CursorTop = 20;
-                    Console.WriteLine("*You found a key!*\n" +
-                        "*Adding to inventory*");
-                    gameObject.AddToInventory(gameObject);
+                    if (!hasPickedUpKey)
+                    {
+                        Console.CursorTop = 20;
+                        Console.WriteLine("*You found a key!*\n" +
+                            "*Adding to inventory*");
+                        gameObject.AddToInventory(gameObject);
+                    }
                     hasPickedUpKey = true;
                 }
             }
@@ -82,17 +76,22 @@ namespace Laboration_4
                         Console.WriteLine("*Door is locked*");
                         return false;
                     }
-                    else
+                    else if(!doorUnlocked)
                     {
-                        if (!doorUnlocked)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("*Enter*");
-                            Console.ReadLine();
-                        }
+                        Console.Clear();
+                        Console.WriteLine("*Enter*");
+                        Console.ReadLine();
+                        gameObject.symbol = 'd';
                         doorUnlocked = true;
-                        gameObject.AddToInventory(gameObject);
                     }
+                }
+            }
+            foreach(var gameObject in gameObjects)
+            {
+                if(gameObject is Monster && gameObject.x == x && gameObject.y == y)
+                {
+                    Console.CursorTop = 20;
+                    movesMade = movesMade + 15;
                 }
             }
             return true;
@@ -113,7 +112,7 @@ namespace Laboration_4
         }
         public int MovePlayer()
         {
-            Console.CursorTop = 24;
+            Console.CursorTop = 27;
             foreach (var gameObject in gameObjects)
             {
                 if (gameObject is Player)
@@ -126,7 +125,6 @@ namespace Laboration_4
                         if(CheckIfWalkable(currentPlayerPositionX - 1, currentPlayerPositionY))
                         {
                             currentPlayerPositionX = gameObject.x--;
-                            gameObject.PlayerUserInterface();
                         }
                     }
                     else if (key.Key == ConsoleKey.A)
@@ -134,7 +132,6 @@ namespace Laboration_4
                         if (CheckIfWalkable(currentPlayerPositionX, currentPlayerPositionY - 1))
                         {
                             currentPlayerPositionY = gameObject.y--;
-                            gameObject.PlayerUserInterface();
                         }
                     }
                     else if (key.Key == ConsoleKey.S)
@@ -142,7 +139,6 @@ namespace Laboration_4
                         if (CheckIfWalkable(currentPlayerPositionX + 1, currentPlayerPositionY))
                         {
                             currentPlayerPositionX = gameObject.x++;
-                            gameObject.PlayerUserInterface();
                         }
                     }
                     else if (key.Key == ConsoleKey.D)
@@ -150,7 +146,6 @@ namespace Laboration_4
                         if (CheckIfWalkable(currentPlayerPositionX, currentPlayerPositionY + 1))
                         {
                             currentPlayerPositionY = gameObject.y++;
-                            gameObject.PlayerUserInterface();
                         }
                     }
                 }
@@ -160,7 +155,32 @@ namespace Laboration_4
         public void PlayGame()
         {
             RenderGameObjects();
+            PlayerUserInterface();
             MovePlayer();
+        }
+        public void Add(Wall wall)
+        {
+            gameObjects.Add(wall);
+        }
+        public void Add(Floor floor)
+        {
+            gameObjects.Add(floor);
+        }
+        public void Add(Door door)
+        {
+            gameObjects.Add(door);
+        }
+        public void Add(Key key)
+        {
+            gameObjects.Add(key);
+        }
+        public void Add(Player player)
+        {
+            gameObjects.Add(player);
+        }
+        public void Add(Monster monster)
+        {
+            gameObjects.Add(monster);
         }
     }
 }

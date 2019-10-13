@@ -16,13 +16,10 @@ namespace Laboration_4
             this.x = x;
             this.y = y;
         }
-        public virtual void PlayerUserInterface() { }
         public void AddToInventory(GameObject gameObject)
         {
             gameObject.symbol = '.';
             inventory.Add(gameObject);
         }
-
-
     }
 }
