@@ -7,6 +7,7 @@ namespace Laboration_4
     abstract public class GameObject
     {
         public List<GameObject> inventory = new List<GameObject>();
+        public List<GameObject> objectTrashCan = new List<GameObject>();
         public char symbol { get; set; }
         public int x { get; set; }
         public int y { get; set; }
@@ -20,6 +21,11 @@ namespace Laboration_4
         {
             gameObject.symbol = '.';
             inventory.Add(gameObject);
+        }
+        public void RemoveObject(GameObject gameObject)
+        {
+            gameObject.symbol = '.';
+            objectTrashCan.Add(gameObject);
         }
     }
 }
