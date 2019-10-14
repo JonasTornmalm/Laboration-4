@@ -78,10 +78,10 @@ namespace Laboration_4
                     }
                     else if(!doorUnlocked)
                     {
-                        Console.Clear();
+                        Console.Clear();                    
                         Console.WriteLine("*Enter*");
-                        Console.ReadLine();
-                        gameObject.symbol = 'd';
+
+                        gameObject.symbol = '.';
                         doorUnlocked = true;
                     }
                 }
