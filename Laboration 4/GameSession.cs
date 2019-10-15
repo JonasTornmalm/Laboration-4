@@ -13,12 +13,6 @@ namespace Laboration_4
         private int width;
         private int movesMade { get; set; } = 0;
 
-        public bool playGame = true;
-        private bool doorUnlocked = false;
-        private bool hasPickedUpKey = false;
-        private bool hasUsedKey = false;
-        private bool hasSword = false;
-
         public GameSession(int height, int width)
         {
             this.height = height;
@@ -28,21 +22,10 @@ namespace Laboration_4
         {
             Console.CursorTop = 25;
             Console.CursorLeft = 0;
-            string key = null;
-            string sword = null;
+            //string key = null;
+            //string sword = null;
             movesMade++;
-            Console.WriteLine($"HP: \n" +
-            $"Player has moved {movesMade} times.");
-            
-            if (hasPickedUpKey && !hasUsedKey)
-            {
-                key = "Key";
-            }
-            if (hasSword)
-            {
-                sword = "Sword";
-            }
-            Console.WriteLine($"Inventory: {key}{sword}");
+            Console.WriteLine($"Player has moved {movesMade} times.");
         }
         public GameObject GetGameObject(int x, int y)
         {
@@ -55,94 +38,30 @@ namespace Laboration_4
             }
             return null;
         }
+        public Player GetPlayer()
+        {
+            foreach(Player player in gameObjects)
+            {
+                if(player is Player)
+                {
+                    return player;
+                }
+            }
+            return null;
+        }
         public bool MovePlayer(int x, int y)
         {
-
-            foreach (var gameObject in gameObjects)
+            foreach(var gameObject in gameObjects)
             {
                 if (gameObject is Wall && gameObject.x == x && gameObject.y == y)
                 {
                     return false;
                 }
-            }
-            foreach(var gameObject in gameObjects)
-            {
-                if(gameObject is Key && gameObject.x == x && gameObject.y == y)
+                if (gameObject is IInteractable && gameObject.x == x && gameObject.y == y)
                 {
-                    if (!hasPickedUpKey)
-                    {
-                        Console.Clear();
-                        Console.CursorTop = 20;
-                        Console.WriteLine("*You found a key!*\n" +
-                            "*Adding to inventory*");
-                        gameObject.AddToInventory(gameObject);
-                        hasPickedUpKey = true;
-                    }
+                    return ((IInteractable)gameObject).InteractWithObject(GetPlayer());
                 }
-            }
-            foreach(var gameObject in gameObjects)
-            {
-                if(gameObject is Door && gameObject.x == x && gameObject.y == y)
-                {
-                    if(!hasPickedUpKey)
-                    {
-                        Console.CursorTop = 20;
-                        Console.WriteLine("*Door is locked*");
-                        return false;
-                    }
-                    else if(!doorUnlocked)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("*Using key to enter*");
-                        Console.ReadLine();
-                        gameObject.symbol = 'd';
-                        doorUnlocked = true;
-                        hasUsedKey = true;
-                    }
-                }
-            }
-            foreach(var gameObject in gameObjects)
-            {
-                if(gameObject is Sword && gameObject.x == x && gameObject.y == y)
-                {
-                    Console.Clear();
-                    Console.CursorTop = 20;
-                    Console.WriteLine("*You found a sword!*\n" +
-                        "*Adding to inventory*");
-                    hasSword = true;
-                    gameObject.AddToInventory(gameObject);
-                }
-            }
-            foreach(var gameObject in gameObjects)
-            {
-                if(gameObject is Monster && gameObject.x == x && gameObject.y == y)
-                {
-                    if (!hasSword)
-                    {
-                        Console.Clear();
-                        Console.CursorTop = 20;
-                        Console.WriteLine("*There are monsters in the way*");
-                        return false;
-                    }
-                    else if(gameObject.symbol == 'M')
-                    {
-                        Console.Clear();
-                        Console.CursorTop = 20;
-                        Console.WriteLine("*You slice your sword on the monster!*");
-                        gameObject.RemoveObject(gameObject);
-                    }
-                }
-            }
-            foreach(var gameObject in gameObjects)
-            {
-                if(gameObject is DoorExit && gameObject.x == x && gameObject.y == y)
-                {
-                    Console.Clear();
-                    Console.WriteLine("*You found the exit, let's get out of here!*\n" +
-                        "*Enter*");
-                    Console.ReadLine();
-                    playGame = false;
-                }
+
             }
             return true;
         }
@@ -219,6 +138,10 @@ namespace Laboration_4
         public void Add(Door door)
         {
             gameObjects.Add(door);
+        }
+        public void Add(DoorExit doorExit)
+        {
+            gameObjects.Add(doorExit);
         }
         public void Add(Key key)
         {

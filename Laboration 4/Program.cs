@@ -12,15 +12,15 @@ namespace Laboration_4
             int levelWidth = 30;
             int playerStartRow = 5;
             int playerStartColumn = 14;
-            int monsterCount = 5;
+            int monsterCount = 10;
 
             GameSession gameSession = new GameSession(levelHeight, levelWidth);
             gameSession.Add(new Player(playerStartRow, playerStartColumn));
 
             for (int i = 0; i < monsterCount; i++)
             {
-                int randomSpawnHeight = rnd.Next(1, 10);
-                int randomSpawnWidth = rnd.Next(1, 37);
+                int randomSpawnHeight = rnd.Next(2, 5);
+                int randomSpawnWidth = rnd.Next(6, 12);
                 gameSession.Add(new Monster(randomSpawnHeight, randomSpawnWidth));
             }
 
@@ -32,7 +32,7 @@ namespace Laboration_4
                 {'#','.','.','k','.','#','.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#'},
                 {'#','.','.','.','.','#','.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#'},
                 {'#','.','.','.','.','#','.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#'},
-                {'#','#','.','#','#','#','.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#'},
+                {'#','#','.','#','#','#','M','M','M','.','.','.','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#'},
                 {'#','.','.','.','.','.','.','.','.','#','#','#','#','.','.','.','.','.','.','.','.','.','.','#','#','#','#','#','#','#'},
                 {'#','.','.','.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.','.','.','.','.','#','.','.','.','S','.','#'},
                 {'#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','.','.','.','.','.','#'},
@@ -76,7 +76,7 @@ namespace Laboration_4
                 }
             }
 
-            while (gameSession.playGame)
+            while (true)
             {
                 gameSession.PlayGame();
             }

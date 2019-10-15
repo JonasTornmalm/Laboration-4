@@ -6,7 +6,6 @@ namespace Laboration_4
 {
     abstract public class GameObject
     {
-        public List<GameObject> inventory = new List<GameObject>();
         public List<GameObject> objectTrashCan = new List<GameObject>();
         public char symbol { get; set; }
         public int x { get; set; }
@@ -17,12 +16,7 @@ namespace Laboration_4
             this.x = x;
             this.y = y;
         }
-        public void AddToInventory(GameObject gameObject)
-        {
-            gameObject.symbol = '.';
-            inventory.Add(gameObject);
-        }
-        public void RemoveObject(GameObject gameObject)
+        public virtual void RemoveObject(GameObject gameObject)
         {
             gameObject.symbol = '.';
             objectTrashCan.Add(gameObject);

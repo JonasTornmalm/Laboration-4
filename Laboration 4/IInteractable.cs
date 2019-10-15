@@ -6,6 +6,6 @@ namespace Laboration_4
 {
     interface IInteractable
     {
-        //void InteractWithObject(GameObject gameObject);
+        bool InteractWithObject(Player player);
     }
 }
