@@ -7,7 +7,7 @@ namespace Laboration_4
     {
         static void Main(string[] args)
         {
-            Random rnd = new Random();
+            Random r = new Random();
             int levelHeight = 11;
             int levelWidth = 30;
             int playerStartRow = 5;
@@ -19,8 +19,8 @@ namespace Laboration_4
 
             for (int i = 0; i < monsterCount; i++)
             {
-                int randomSpawnHeight = rnd.Next(2, 5);
-                int randomSpawnWidth = rnd.Next(6, 12);
+                int randomSpawnHeight = r.Next(2, 5);
+                int randomSpawnWidth = r.Next(6, 12);
                 gameSession.Add(new Monster(randomSpawnHeight, randomSpawnWidth));
             }
 

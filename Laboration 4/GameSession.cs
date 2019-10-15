@@ -11,21 +11,11 @@ namespace Laboration_4
 
         private int height;
         private int width;
-        private int movesMade { get; set; } = 0;
 
         public GameSession(int height, int width)
         {
             this.height = height;
             this.width = width;
-        }
-        public void PlayerUserInterface()
-        {
-            Console.CursorTop = 25;
-            Console.CursorLeft = 0;
-            //string key = null;
-            //string sword = null;
-            movesMade++;
-            Console.WriteLine($"Player has moved {movesMade} times.");
         }
         public GameObject GetGameObject(int x, int y)
         {
@@ -61,7 +51,6 @@ namespace Laboration_4
                 {
                     return ((IInteractable)gameObject).InteractWithObject(GetPlayer());
                 }
-
             }
             return true;
         }
@@ -124,7 +113,7 @@ namespace Laboration_4
         public void PlayGame()
         {
             RenderGameObjects();
-            PlayerUserInterface();
+            GetPlayer().PlayerUserInterface();
             PlayerController();
         }
         public void Add(Wall wall)

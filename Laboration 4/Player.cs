@@ -8,6 +8,7 @@ namespace Laboration_4
     {
         public List<GameObject> inventory = new List<GameObject>();
 
+        private int movesMade { get; set; } = 0;
         public bool playGame = true;
         public bool hasPickedUpKey = false;
         public bool hasUsedKey = false;
@@ -16,9 +17,28 @@ namespace Laboration_4
         {
             symbol = '@';
         }
-        //public GameObject AddToInventory(int x, int y)
-        //{
-        //
-        //}
+        public void PlayerUserInterface()
+        {
+            Console.CursorTop = 25;
+            Console.CursorLeft = 0;
+            string key = null;
+            string sword = null;
+            movesMade++;
+            Console.WriteLine($"Player has moved {movesMade} times.");
+            if (hasPickedUpKey && !hasUsedKey)
+            {
+                key = "Key";
+            }
+            if (hasSword)
+            {
+                sword = "Sword";
+            }
+            Console.WriteLine($"Inventory: {key}{sword}");
+        }
+        public void AddToInventory(GameObject item)
+        {
+            symbol = '.';
+            inventory.Add(item);
+        }
     }
 }

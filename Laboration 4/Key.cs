@@ -20,7 +20,7 @@ namespace Laboration_4
                 Console.CursorTop = 20;
                 Console.WriteLine("*You found a key!*\n" +
                     "*Adding to inventory*");
-
+                //player.AddToInventory(player);
                 player.hasPickedUpKey = true;
             }
             return true;
