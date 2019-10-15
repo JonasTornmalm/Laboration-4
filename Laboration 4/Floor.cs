@@ -8,7 +8,7 @@ namespace Laboration_4
     {
         public Floor(int x, int y) : base(x, y)
         {
-            symbol = '.';
+            symbol = ' ';
         }
     }
 }

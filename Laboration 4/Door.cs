@@ -13,7 +13,7 @@ namespace Laboration_4
         }
         public bool InteractWithObject(Player player)
         {
-            if (!player.hasPickedUpKey)
+            if (!player.hasKey)
             {
                 Console.CursorTop = 20;
                 Console.WriteLine("*Door is locked*");
@@ -24,7 +24,7 @@ namespace Laboration_4
                 Console.Clear();
                 Console.WriteLine("*Using key to enter*");
                 Console.ReadLine();
-                symbol = 'd';
+                symbol = ' ';
                 doorUnlocked = true;
                 player.hasUsedKey = true;
             }

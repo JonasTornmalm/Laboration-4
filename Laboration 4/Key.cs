@@ -11,17 +11,16 @@ namespace Laboration_4
         {
             symbol = 'k';
         }
-
         public bool InteractWithObject(Player player)
         {
-            if (!player.hasPickedUpKey)
+            if (!player.hasKey)
             {
                 Console.Clear();
                 Console.CursorTop = 20;
                 Console.WriteLine("*You found a key!*\n" +
                     "*Adding to inventory*");
-                //player.AddToInventory(player);
-                player.hasPickedUpKey = true;
+                symbol = ' ';
+                player.hasKey = true;
             }
             return true;
         }

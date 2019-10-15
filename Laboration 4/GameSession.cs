@@ -83,6 +83,7 @@ namespace Laboration_4
                         if(MovePlayer(currentPlayerPositionX - 1, currentPlayerPositionY))
                         {
                             currentPlayerPositionX = gameObject.x--;
+                            GetPlayer().PlayerUserInterface();
                         }
                     }
                     else if (key.Key == ConsoleKey.A)
@@ -90,6 +91,7 @@ namespace Laboration_4
                         if (MovePlayer(currentPlayerPositionX, currentPlayerPositionY - 1))
                         {
                             currentPlayerPositionY = gameObject.y--;
+                            GetPlayer().PlayerUserInterface();
                         }
                     }
                     else if (key.Key == ConsoleKey.S)
@@ -97,6 +99,7 @@ namespace Laboration_4
                         if (MovePlayer(currentPlayerPositionX + 1, currentPlayerPositionY))
                         {
                             currentPlayerPositionX = gameObject.x++;
+                            GetPlayer().PlayerUserInterface();
                         }
                     }
                     else if (key.Key == ConsoleKey.D)
@@ -104,6 +107,7 @@ namespace Laboration_4
                         if (MovePlayer(currentPlayerPositionX, currentPlayerPositionY + 1))
                         {
                             currentPlayerPositionY = gameObject.y++;
+                            GetPlayer().PlayerUserInterface();
                         }
                     }
                 }
@@ -113,40 +117,12 @@ namespace Laboration_4
         public void PlayGame()
         {
             RenderGameObjects();
-            GetPlayer().PlayerUserInterface();
             PlayerController();
         }
-        public void Add(Wall wall)
+
+        public void Add(GameObject gameObject)
         {
-            gameObjects.Add(wall);
-        }
-        public void Add(Floor floor)
-        {
-            gameObjects.Add(floor);
-        }
-        public void Add(Door door)
-        {
-            gameObjects.Add(door);
-        }
-        public void Add(DoorExit doorExit)
-        {
-            gameObjects.Add(doorExit);
-        }
-        public void Add(Key key)
-        {
-            gameObjects.Add(key);
-        }
-        public void Add(Player player)
-        {
-            gameObjects.Add(player);
-        }
-        public void Add(Monster monster)
-        {
-            gameObjects.Add(monster);
-        }
-        public void Add(Sword sword)
-        {
-            gameObjects.Add(sword);
+            gameObjects.Add(gameObject);
         }
     }
 }

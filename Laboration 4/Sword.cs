@@ -16,8 +16,8 @@ namespace Laboration_4
             Console.CursorTop = 20;
             Console.WriteLine("*You found a sword!*\n" +
                 "*Adding to inventory*");
+            symbol = ' ';
             player.hasSword = true;
-            //GetPlayer().AddToInventory(gameObject);
             return true;
         }
     }

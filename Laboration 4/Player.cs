@@ -6,11 +6,10 @@ namespace Laboration_4
 {
     public class Player : GameObject
     {
-        public List<GameObject> inventory = new List<GameObject>();
-
         private int movesMade { get; set; } = 0;
+
         public bool playGame = true;
-        public bool hasPickedUpKey = false;
+        public bool hasKey = false;
         public bool hasUsedKey = false;
         public bool hasSword = false;
         public Player(int x, int y) : base(x, y)
@@ -25,7 +24,7 @@ namespace Laboration_4
             string sword = null;
             movesMade++;
             Console.WriteLine($"Player has moved {movesMade} times.");
-            if (hasPickedUpKey && !hasUsedKey)
+            if (hasKey && !hasUsedKey)
             {
                 key = "Key";
             }
@@ -35,10 +34,10 @@ namespace Laboration_4
             }
             Console.WriteLine($"Inventory: {key}{sword}");
         }
-        public void AddToInventory(GameObject item)
+        public void DisplayScore()
         {
-            symbol = '.';
-            inventory.Add(item);
+            Console.WriteLine($"You made it out!\n" +
+                $"It took you {movesMade} moves.");
         }
     }
 }

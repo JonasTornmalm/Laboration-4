@@ -10,10 +10,6 @@ namespace Laboration_4
         {
             symbol = 'M';
         }
-        public override void RemoveObject(GameObject gameObject)
-        {
-            base.RemoveObject(gameObject);
-        }
         public bool InteractWithObject(Player player)
         {
             if (!player.hasSword)
